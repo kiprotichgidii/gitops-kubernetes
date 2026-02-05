@@ -2,6 +2,7 @@ name: Deploy ArgoCD
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   deploy-argocd:
@@ -39,19 +40,19 @@ jobs:
           kubectl get nodes
           kubectl get pods -A
 
-      - name: Setup Helm
-        uses: azure/setup-helm@v4.2.0
+    #   - name: Setup Helm
+    #     uses: azure/setup-helm@v4.2.0
 
-      - name: Deploy ArgoCD
-        working-directory: ./
-        run: |
-          helm repo add argo https://argoproj.github.io/argo-helm
-          helm repo update
-          export KUBECONFIG=~/.kube/config
-          #helm uninstall argocd -n argocd
-          helm upgrade --install argocd argo/argo-cd \
-            --namespace argocd \
-            --create-namespace \
-            -f argocd/values.yaml
-          kubectl get pods -n argocd
-          kubectl get svc -n argocd
+    #   - name: Deploy ArgoCD
+    #     working-directory: ./
+    #     run: |
+    #       helm repo add argo https://argoproj.github.io/argo-helm
+    #       helm repo update
+    #       export KUBECONFIG=~/.kube/config
+    #       #helm uninstall argocd -n argocd
+    #       helm upgrade --install argocd argo/argo-cd \
+    #         --namespace argocd \
+    #         --create-namespace \
+    #         -f argocd/values.yaml
+    #       kubectl get pods -n argocd
+    #       kubectl get svc -n argocd
