@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: App-of-Apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kiprotichgidii/gitops-kubernetes.git
+    targetRevision: main
+    path: clusters/homelab
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
