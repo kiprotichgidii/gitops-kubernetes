@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-components:
-    name: "Deploy Components"
+  deploy-argocd:
+    name: "Deploy ArgoCD"
     runs-on: self-hosted
     defaults:
       run:
