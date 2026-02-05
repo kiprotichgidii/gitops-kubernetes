@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kiprotichgidii/gitops-kubernetes.git
+    repoURL: https://github.com/kloudke/gitops-kubernetes.git
     targetRevision: main
     path: clusters/homelab
   destination:
