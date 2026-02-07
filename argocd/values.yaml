@@ -20,3 +20,4 @@ server:
       - secretName: argocd-server-tls
         hosts:
           - argocd.kloudke.dpdns.org
+
