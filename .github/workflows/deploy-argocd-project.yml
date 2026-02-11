@@ -5,8 +5,8 @@ on:
   #push:
 
 jobs:
-  deploy-argocd:
-    name: "Deploy ArgoCD"
+  deploy-argocd-platform-project:
+    name: "Deploy ArgoCD Platform Project"
     runs-on:
       group: kloudke
     defaults:
