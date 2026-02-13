@@ -38,24 +38,38 @@ vault write auth/kubernetes/config \
     kubernetes_host="https://kubernetes.default.svc:443"
 ```
 
-### Create Vault Secret
+### Create Vault Policy for Terraform
 
-Exec into the vault pod:
+Exec into the Vault pod and create `terraform-policy.hcl` file:
 ```bash
 kubectl exec -it vault-0 -- /bin/sh
-```
 
-Enable the kv-v2 engine:
-```bash
-vault secrets enable -path=secret kv-v2
-```
+cat <<EOF > terraform-policy.hcl
+path "secret/*" {
+  capabilities = ["create", "update", "read", "delete", "list"]
+}
 
-Create a secret:
+path "auth/kubernetes/*" {
+  capabilities = ["create", "update", "read"]
+}
+
+path "sys/mounts/*" {
+  capabilities = ["create", "update", "read"]
+}
+EOF
+```
+Then write the policy to Vault:
 ```bash
-vault kv put secret/VAULT_SECRET_NAME \
-    username=VAULT_SECRET_VALUE \
-    password=VAULT_SECRET_VALUE
-exit
+vault policy write terraform-policy terraform-policy.hcl
+```
+Create Vault Role for Terraform:
+```bash
+vault write auth/kubernetes/role/terraform-role \
+    bound_service_account_names=terraform \
+    bound_service_account_namespaces=vault \
+    policies=terraform-policy \
+    token_ttl=24h \
+    token_max_ttl=24h
 ```
 
 ### Create a Kubernetes Service Account for External Secrets
