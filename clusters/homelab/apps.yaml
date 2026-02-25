@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/kloudke/gitops-kubernetes.git
     targetRevision: main
-    path: apps/dev
+    path: apps/prod
     directory:
       recurse: true
   destination:
